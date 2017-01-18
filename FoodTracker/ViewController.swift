@@ -38,12 +38,34 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     // Mark - UITableViewDataSource
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if self.searchController.isActive {
+            return self.filteredSuggestedSearchFoods.count
+        }
+        else {
+            return self.suggestedSearchFoods.count
+        }
+        
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")! as UITableViewCell
+        
+        var foodName:String
+        
+        if self.searchController.isActive {
+            foodName = self.filteredSuggestedSearchFoods[indexPath.row]
+        }
+        else {
+            foodName = self.suggestedSearchFoods[indexPath.row]
+        }
+        
+        cell.textLabel?.text = foodName
+        cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+        
+        return cell
     }
     
     // Mark - UISearchResultsUpdating
