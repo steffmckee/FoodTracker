@@ -73,5 +73,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func updateSearchResults(for searchController: UISearchController) {
     }
     
+    func filterContentForSearch(searchText: String, scope: Int) {
+        self.filteredSuggestedSearchFoods = self.suggestedSearchFoods.filter({ (food: String) -> Bool in
+            let foodMatch = food.range(of: searchText)
+            return foodMatch != nil
+        })
+    }
 }
 
